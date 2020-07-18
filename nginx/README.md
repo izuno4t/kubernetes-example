@@ -1,6 +1,8 @@
 # Kubernetes で Nginx のコンテナを起動
 
-- DeploymentのマニフェストをK8sに追加
+## nginx の Pod をデプロイする
+
+- Deployment のマニフェストファイルを Kubernetes に追加
   
 ```sh
 $ kubectl apply -f deployment.yaml
@@ -26,3 +28,24 @@ nginx-deployment-9bcf74994-9t6k5   1/1     Running   0          116s
 nginx-deployment-9bcf74994-n2xns   1/1     Running   0          116s
 nginx-deployment-9bcf74994-
 ```
+
+## 外部からのアクセスを可能にするため Service を追加
+
+- Service のマニフェストファイルを Kubernetes に追加
+
+```sh
+$ kubectl apply -f service.yaml
+service/nginx-deployment created
+```
+
+- nginxのPodwoを追加
+
+```sh
+$ kubectl get service
+NAME               TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP      10.96.0.1        <none>        443/TCP          45m
+nginx-deployment   LoadBalancer   10.109.227.141   localhost     8080:32561/TCP   23s
+```
+
+
+
