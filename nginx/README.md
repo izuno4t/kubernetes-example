@@ -1,6 +1,6 @@
 # Kubernetes で Nginx のコンテナを起動
 
-## nginx の Pod をデプロイする
+## nginx をデプロイする
 
 - Deployment のマニフェストファイルを Kubernetes に追加
   
@@ -38,7 +38,7 @@ $ kubectl apply -f service.yaml
 service/nginx-deployment created
 ```
 
-- nginxのPodwoを追加
+- Service の状態
 
 ```sh
 $ kubectl get service
@@ -47,5 +47,32 @@ kubernetes         ClusterIP      10.96.0.1        <none>        443/TCP        
 nginx-deployment   LoadBalancer   10.109.227.141   localhost     8080:32561/TCP   23s
 ```
 
+## nginx をアンデプロイする
 
+- Service を削除
 
+```sh
+$ kubectl delete -f service.yaml
+service "nginx-deployment" deleted
+```
+
+- Service の状態
+
+```sh
+miu:nginx izuno$ kubectl get service
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   55m
+```
+
+- Pod を削除
+
+```sh
+$ kubectl delete -f deployment.yaml
+deployment.apps "nginx-deployment" deleted
+```
+- Pod を削除後の状態
+
+```sh
+$ kubectl get pods
+No resources found in default namespace.
+```
